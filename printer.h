@@ -1,6 +1,5 @@
 //ifndef PRINTER_H
 
-#include <qserialport.h>
 #include <libusb.h>
 #include <usbutil.h>
 #include <QStringList>
@@ -35,7 +34,6 @@ public:
 
 private:
     libusb_device_handle *usbDev;
-    //QextSerialPort *serialPrinter;
     UsbUtil *usbPrinter;
     QStringList lines;
     QString idVendor;
