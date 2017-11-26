@@ -150,6 +150,37 @@ int UsbUtil::dev_write(libusb_device_handle *device_handle, QString data, int ou
 
 }
 
+int UsbUtil::dev_control(libusb_device_handle *device_handle,unsigned char* _udata, uint8_t bRequest, int out_len)
+{
+    int r = 0;
+
+    uint8_t bmRequestType = LIBUSB_ENDPOINT_IN | LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE;
+    uint16_t wValue = 0;
+    uint16_t wIndex = 0;
+
+    r = libusb_control_transfer(device_handle, bmRequestType, bRequest, wValue, wIndex, _udata, out_len, USB_TIMEOUT);
+
+    if(r == LIBUSB_ERROR_TIMEOUT)
+    {
+        qCritical() << "USB transfer timed out";
+        return -1;
+
+    } else if (r == LIBUSB_ERROR_PIPE) {
+        qCritical() << "control request was not supported by the device";
+        return -2;
+
+    } else if (r == LIBUSB_ERROR_NO_DEVICE) {
+        qCritical() << "the device has been disconnected";
+        return -3;
+
+    } else if (r == LIBUSB_ERROR_OTHER) {
+        qCritical() << "USB Error";
+        return -4;
+    }
+
+    return 0;
+}
+
 int UsbUtil::dev_close(libusb_device_handle *device_handle)
 {
     int r;
