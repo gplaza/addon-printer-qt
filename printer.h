@@ -17,6 +17,10 @@
 #define TXT_ALIGN_LT "\x1b\x61\x00"
 #define CTL_RT "\x1b\x4a\x02"
 
+#define PRINTER_OK          0x18
+#define PRINTER_ERROR       0x08
+#define PRINTER_OUT_PAPER   0x20
+
 class Printer
 {
 public:
