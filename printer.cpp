@@ -131,3 +131,19 @@ bool Printer::cutPaper()
     return true;
 }
 
+bool Printer::checkStatus()
+{
+    if(usbDev != NULL)
+    {
+        unsigned char status;
+
+        usbPrinter->dev_open(usbDev);
+        usbPrinter->dev_control(usbDev,&status);
+
+        if(status == PRINTER_OK)
+            return true;
+
+        return false;
+    }
+}
+
