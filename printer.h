@@ -26,6 +26,7 @@ public:
     bool printTitle(QString text);
     void setTitle(QString text);
     void setLine(QString text);
+    bool checkStatus();
     bool cutPaper();
 
 private:
